@@ -1,0 +1,61 @@
+name: Update UPF timetable
+
+on:
+  schedule:
+    # Twice a day. UTC hours 7+8 and 18+19 cover both summer and winter time; the script only
+    # proceeds when it is 09:xx or 20:xx in Madrid, so exactly one of each pair does the work.
+    # Minute 7 avoids GitHub's busy top-of-hour queue.
+    - cron: "7 7,8,18,19 * * *"
+  workflow_dispatch: # manual run from the Actions tab; ignores the time-of-day gate
+
+concurrency:
+  group: sync
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 100 # up to 5 attempts, 15 minutes apart
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Fetch timetable, diff, write feed
+        env:
+          UPF_URL: ${{ secrets.UPF_URL }}
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
+          FORCE: ${{ github.event_name == 'workflow_dispatch' && '1' || '' }}
+          # Optional repository variables (Settings > Variables); defaults live in upf_calendar.py
+          BASELINE_MODE: ${{ vars.BASELINE_MODE }}
+          BASELINE_WEEK: ${{ vars.BASELINE_WEEK }}
+          LAST_MINUTE_DAYS: ${{ vars.LAST_MINUTE_DAYS }}
+        run: python3 upf_calendar.py
+
+      - name: Commit updated feed and state
+        if: success() || failure()
+        run: |
+          git config user.name "upf-calendar-bot"
+          git config user.email "upf-calendar-bot@users.noreply.github.com"
+          git add state.json docs/upf.ics
+          git diff --cached --quiet || { git commit -m "Update timetable $(TZ=Europe/Madrid date '+%F %H:%M')" && git push; }
+
+  deploy:
+    needs: sync
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main # pick up the commit made by the sync job
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs
+      - id: deployment
+        uses: actions/deploy-pages@v4
