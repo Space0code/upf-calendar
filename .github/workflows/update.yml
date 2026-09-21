@@ -27,6 +27,8 @@ jobs:
           NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
           FORCE: ${{ github.event_name == 'workflow_dispatch' && '1' || '' }}
           # Optional repository variables (Settings > Variables); defaults live in upf_calendar.py
+          TERM_START: ${{ vars.TERM_START }}
+          TERM_END: ${{ vars.TERM_END }}
           BASELINE_MODE: ${{ vars.BASELINE_MODE }}
           BASELINE_WEEK: ${{ vars.BASELINE_WEEK }}
           LAST_MINUTE_DAYS: ${{ vars.LAST_MINUTE_DAYS }}

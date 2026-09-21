@@ -1,21 +1,43 @@
-# UPF timetable → Apple Calendar
+# UPF timetable → your calendar
 
-`upf_calendar.py` reads the UPF public timetable (the same JSON the web page uses), writes `docs/upf.ics`
-for the whole semester, and pushes an alert (ntfy) on last-minute changes and unusual additions.
-GitHub Actions runs it at ~09:00 and ~20:00 Madrid time and publishes the feed with GitHub Pages.
-Subscribe to `https://<user>.github.io/<repo>/upf.ics` in Apple Calendar (File > New Calendar Subscription).
+Keeps a calendar feed of the EMAI year-1 timetable (semester until 20 Dec 2026) up to date, and sends a phone push
+when a class changes at the last minute. Unofficial, hobby project.
 
-- **Last-minute change**: a session today/tomorrow changed, was cancelled or was added since the last run.
-- **Unusual addition**: a newly appeared session (anywhere in the semester) whose
-  (course, type, weekday, start, end) is not in the baseline week. Everything is also logged in the event Notes.
-- **Failures**: 5 attempts, 15 minutes apart; then an urgent push + GitHub's failure email. The feed is never
-  overwritten with bad data (empty or >50% smaller fetch counts as a failure).
+## Use it
 
-## Settings (repo variables, all optional)
-`BASELINE_MODE` = `fixed` (default, week `BASELINE_WEEK`=2026-09-28) or `previous_week`;
-`LAST_MINUTE_DAYS` (default 1 = today+tomorrow). Change with `gh variable set NAME --body VALUE`.
-Secrets: `UPF_URL` (the timetable link), `NTFY_TOPIC`. Semester dates: `TERM_START`/`TERM_END` in `upf_calendar.py`.
+**1. Calendar feed** (read-only, re-checked around 09:00 and 20:00 Madrid time):
 
-## Local use
-`UPF_URL=... FORCE=1 OUT_DIR=/tmp/out python3 upf_calendar.py` · tests: `python3 -m unittest discover -s tests`
-(Times are floating Madrid wall-clock times, which is right as long as the calendar is used in that timezone.)
+```
+https://space0code.github.io/upf-calendar/upf.ics
+```
+
+- **Apple Calendar:** File → New Calendar Subscription, use `webcal://…` instead of `https://…`. Location: iCloud, refresh: hourly.
+- **Google Calendar:** Add calendar → From URL (Google refreshes slowly, sometimes many hours).
+- **Outlook:** Add calendar → Subscribe from web.
+
+**2. Phone alerts (optional):** install the free [ntfy](https://ntfy.sh) app (iPhone or Android) and subscribe to the topic
+`upf-timetable-ab06cc1d6b`.
+
+You get a push when a class **today or tomorrow** changes (time, room, cancelled, added), or when a **new session outside the
+regular weekly pattern** appears (extra lecture, exam). The pattern is the week of 28 Sep – 4 Oct. Everything else is only
+noted in the event's Notes. You also get an urgent push if the timetable can't be fetched 5 times in a row.
+
+## Your own copy (other programme, own alerts)
+
+Fork, delete `state.json` and `docs/upf.ics`, then in Settings:
+add secrets `UPF_URL` (your programme's public timetable link) and `NTFY_TOPIC` (your own topic, not the shared one),
+set Pages → Source: GitHub Actions, and run the "Update UPF timetable" workflow once.
+
+Optional repo variables: `TERM_START`, `TERM_END` (default 2026-09-14 / 2026-12-20), `BASELINE_MODE` (`fixed` or `previous_week`),
+`BASELINE_WEEK` (Monday of the fixed baseline week), `LAST_MINUTE_DAYS` (default 1 = today and tomorrow).
+
+## Contributing
+
+PRs welcome: fork, branch, open a PR. Wanted: direct Google Calendar sync, other notification channels, other programmes.
+
+```
+python3 -m unittest discover -s tests    # no network, no dependencies
+```
+
+Don't edit `state.json` / `docs/upf.ics` (the workflow writes them). Using an AI coding agent? See [`AGENTS.md`](AGENTS.md).
+MIT licensed.
