@@ -19,7 +19,7 @@ UPF_URL='<timetable link>' FORCE=1 OUT_DIR=/tmp/upf python3 upf_calendar.py   # 
 - Set `NOW_OVERRIDE=2026-09-21T20:07` to simulate the clock, `FORCE=1` to skip the 09:xx/20:xx run gate,
   `MAX_ATTEMPTS=1` to avoid 15-minute retry sleeps.
 - On macOS the Python from PlatformIO or similar may lack CA certificates; use `/usr/bin/python3`.
-- Leave `NTFY_TOPIC` unset when testing: alerts are then printed instead of pushed. Never send test pushes to someone else's topic.
+- Leave `NTFY_TOPIC` unset when testing: alerts are then printed instead of pushed. The main deployment's topic is public and shared with the whole class, so never publish test messages to it; use your own topic.
 
 ## Hard rules
 - **Never edit or commit `state.json` or `docs/upf.ics`.** The workflow owns them; PR edits cause merge conflicts and CI rejects them.
