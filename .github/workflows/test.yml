@@ -2,8 +2,6 @@ name: Tests
 
 on:
   pull_request:
-  push:
-    branches-ignore: [main] # main gets bot data commits; no need to retest those
 
 permissions:
   contents: read
