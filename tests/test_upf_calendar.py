@@ -149,6 +149,36 @@ class Ics(unittest.TestCase):
         self.assertIn("SEQUENCE:2", unfolded)
 
 
+class Overrides(unittest.TestCase):
+    REC = {**ev(start="2026-10-06T10:30", end="2026-10-06T13:00", course="Reinforcement learning"),
+           "first_seen": "x", "updated": "2026-09-21T20:07", "seq": 1, "log": []}
+
+    def load(self, text):
+        import tempfile
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp, "overrides.json")
+            path.write_text(text, encoding="utf-8")
+            return u.load_overrides(path)
+
+    def test_cancelled_session_is_marked(self):
+        cancels = [{"course": "reinforcement learning ", "date": "2026-10-06", "note": "Lecturer away"}]
+        unfolded = u.render_ics({"r1": self.REC}, SLOTS, cancels).replace("\r\n ", "")
+        self.assertIn("SUMMARY:CANCELLED: Reinforcement learning", unfolded)
+        self.assertIn("STATUS:CANCELLED", unfolded)
+        self.assertIn("SEQUENCE:2", unfolded)
+        self.assertIn("DESCRIPTION:Cancelled (manual override): Lecturer away", unfolded)
+
+    def test_other_dates_and_courses_untouched(self):
+        for c in ({"course": "Reinforcement learning", "date": "2026-10-13"}, {"course": "RL", "date": "2026-10-06"}):
+            self.assertEqual(u.render_ics({"r1": self.REC}, SLOTS, [c]), u.render_ics({"r1": self.REC}, SLOTS))
+
+    def test_loading(self):
+        self.assertEqual(u.load_overrides(Path("/nonexistent/overrides.json")), [])
+        self.assertEqual(len(self.load('{"cancel": [{"course": "RL", "date": "2026-10-06"}]}')), 1)
+        for bad in ("not json", '{"cancel": [{"course": "RL", "date": "6 Oct"}]}', '{"cancel": [{"date": "2026-10-06"}]}'):
+            self.assertEqual(self.load(bad), [])  # broken file is ignored, never stops the sync
+
+
 class Run(unittest.TestCase):
     def test_gate_skips_off_hours(self):
         with mock.patch.dict(os.environ, {"NOW_OVERRIDE": "2026-09-21T14:00", "FORCE": "", "UPF_URL": "x"}):
