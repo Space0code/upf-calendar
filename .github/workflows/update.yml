@@ -2,11 +2,11 @@ name: Update UPF timetable
 
 on:
   schedule:
-    # Twice a day. UTC hours 7+8 and 18+19 cover both summer and winter time; the script only
-    # proceeds when it is 09:xx or 20:xx in Madrid, so exactly one of each pair does the work.
-    # Minute 7 avoids GitHub's busy top-of-hour queue.
-    - cron: "7 7,8,18,19 * * *"
-  workflow_dispatch: # manual run from the Actions tab; ignores the time-of-day gate
+    # Every 2 hours, roughly 06-22 Madrid time. GitHub often starts scheduled runs hours late or drops
+    # some, so frequent slots keep the feed fresh. Repeat runs are harmless: no change means no commit
+    # and no alert. Minute 7 avoids GitHub's busy top-of-hour queue.
+    - cron: "7 4-20/2 * * *"
+  workflow_dispatch: # manual run from the Actions tab
 
 concurrency:
   group: sync

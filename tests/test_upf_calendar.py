@@ -181,7 +181,8 @@ class Overrides(unittest.TestCase):
 
 class Run(unittest.TestCase):
     def test_gate_skips_off_hours(self):
-        with mock.patch.dict(os.environ, {"NOW_OVERRIDE": "2026-09-21T14:00", "FORCE": "", "UPF_URL": "x"}):
+        env = {"NOW_OVERRIDE": "2026-09-21T14:00", "FORCE": "", "UPF_URL": "x", "GATE_HOURS": "9,20"}
+        with mock.patch.dict(os.environ, env):
             with mock.patch.object(u, "fetch_raw", side_effect=AssertionError("must not fetch")):
                 self.assertEqual(u.run(u.Config()), 0)
 

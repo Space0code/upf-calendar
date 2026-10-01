@@ -5,7 +5,7 @@ when a class changes at the last minute. Unofficial, hobby project.
 
 ## Use it
 
-**1. Calendar feed** (read-only, re-checked around 09:00 and 20:00 Madrid time):
+**1. Calendar feed** (read-only, re-checked about every 2 hours during the day):
 
 ```
 https://space0code.github.io/upf-calendar/upf.ics
@@ -32,7 +32,7 @@ When a lecturer cancels a session that the UPF timetable still shows, add it to 
 ```
 
 `course` is the course name as shown in the calendar (case-insensitive), `date` is `YYYY-MM-DD`. The session stays in the
-feed, titled "CANCELLED: …" and marked cancelled. It takes effect on the next run (09:00 / 20:00), or right away if you run the
+feed, titled "CANCELLED: …" and marked cancelled. It takes effect on the next run (within ~2 hours), or right away if you run the
 "Update UPF timetable" workflow from the Actions tab. If the file is invalid it is ignored and the run log shows a warning.
 
 ## Your own copy (other programme, own alerts)
