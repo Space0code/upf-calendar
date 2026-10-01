@@ -396,6 +396,29 @@
    "type": "Theory",
    "updated": "2026-09-21T16:57"
   },
+  "r-1953522211": {
+   "code": 32806,
+   "comment": "",
+   "course": "Autonomous systems",
+   "end": "2026-10-05T17:30",
+   "first_seen": "2026-10-01T17:26",
+   "group": "1",
+   "key": "r-1953522211",
+   "kind": "class",
+   "lecturers": [],
+   "log": [
+    {
+     "at": "2026-10-01T17:26",
+     "text": "Added — outside the regular weekly pattern"
+    }
+   ],
+   "obs": "",
+   "room": "54.006",
+   "seq": 0,
+   "start": "2026-10-05T15:00",
+   "type": "Theory",
+   "updated": "2026-10-01T17:26"
+  },
   "r-2069621520": {
    "code": 32810,
    "comment": "",
@@ -918,24 +941,6 @@
    "type": "Theory",
    "updated": "2026-09-21T16:57"
   },
-  "r1862455393": {
-   "code": 32810,
-   "comment": "",
-   "course": "Reinforcement learning",
-   "end": "2026-09-29T13:00",
-   "first_seen": "2026-09-21T16:57",
-   "group": "1",
-   "key": "r1862455393",
-   "kind": "class",
-   "lecturers": [],
-   "log": [],
-   "obs": "",
-   "room": "52.S27",
-   "seq": 0,
-   "start": "2026-09-29T10:30",
-   "type": "Theory",
-   "updated": "2026-09-21T16:57"
-  },
   "r1868734865": {
    "code": 32807,
    "comment": "",
@@ -1260,24 +1265,6 @@
    "type": "Theory",
    "updated": "2026-09-21T16:57"
   },
-  "r903961671": {
-   "code": 32810,
-   "comment": "",
-   "course": "Reinforcement learning",
-   "end": "2026-10-06T13:00",
-   "first_seen": "2026-09-21T16:57",
-   "group": "1",
-   "key": "r903961671",
-   "kind": "class",
-   "lecturers": [],
-   "log": [],
-   "obs": "",
-   "room": "52.321",
-   "seq": 0,
-   "start": "2026-10-06T10:30",
-   "type": "Theory",
-   "updated": "2026-09-21T16:57"
-  },
   "r908140447": {
    "code": 32807,
    "comment": "",
@@ -1369,7 +1356,7 @@
    "updated": "2026-09-21T16:57"
   }
  },
- "heartbeat_week": "2026-W39",
+ "heartbeat_week": "2026-W40",
  "pending": [],
  "version": 1
 }
