@@ -22,6 +22,19 @@ You get a push when a class **today or tomorrow** changes (time, room, cancelled
 regular weekly pattern** appears (extra lecture, exam). The pattern is the week of 28 Sep – 4 Oct. Everything else is only
 noted in the event's Notes. You also get an urgent push if the timetable can't be fetched 5 times in a row.
 
+## Cancelling a class by hand
+
+When a lecturer cancels a session that the UPF timetable still shows, add it to [`overrides.json`](overrides.json)
+(editing it on GitHub is fine):
+
+```json
+{"cancel": [{"course": "Reinforcement learning", "date": "2026-10-06", "note": "Announced in class"}]}
+```
+
+`course` is the course name as shown in the calendar (case-insensitive), `date` is `YYYY-MM-DD`. The session stays in the
+feed, titled "CANCELLED: …" and marked cancelled. It takes effect on the next run (09:00 / 20:00), or right away if you run the
+"Update UPF timetable" workflow from the Actions tab. If the file is invalid it is ignored and the run log shows a warning.
+
 ## Your own copy (other programme, own alerts)
 
 Fork, delete `state.json` and `docs/upf.ics`, then in Settings:

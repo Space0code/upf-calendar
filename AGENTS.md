@@ -43,6 +43,8 @@ UPF_URL='<timetable link>' FORCE=1 OUT_DIR=/tmp/upf python3 upf_calendar.py   # 
   Do not "simplify" this to one cron entry.
 - "Last-minute" means the session is not over and starts today or within `LAST_MINUTE_DAYS` days. "Unusual" means a *newly appeared*
   session whose (course, type, weekday, start, end) is not in the baseline week; sessions already present when the feed was first seeded never alert.
+- `overrides.json` is hand-edited (unlike `state.json`). Cancellations in it are applied only in `render_ics`, so `state.json`
+  keeps mirroring UPF and diffs/alerts are unaffected. An invalid file is ignored with a warning, never a failed run.
 - The first run with no `state.json` seeds silently (and sends one "feed initialised" push).
 
 ## Adding features

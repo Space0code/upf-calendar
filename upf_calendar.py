@@ -51,6 +51,7 @@ class Config:
         self.gate_hours = {int(h) for h in _env("GATE_HOURS", "9,20").split(",")}
         self.force = _env("FORCE") not in ("", "0")
         self.out_dir = Path(_env("OUT_DIR", str(ROOT)))
+        self.overrides_path = Path(_env("OVERRIDES", str(ROOT / "overrides.json")))  # hand-edited, in the repo
 
     @property
     def ics_path(self) -> Path:
@@ -330,6 +331,42 @@ def build_records(
     return records
 
 
+# --------------------------------------------------------------------------- manual overrides
+
+
+def load_overrides(path: Path) -> list[dict]:
+    """Hand-written cancellations, e.g. a lecturer announcing in class that a session is off.
+    File format: {"cancel": [{"course": "Reinforcement learning", "date": "2026-10-06", "note": "..."}]}.
+    A broken file is reported and ignored, so a typo never stops the timetable sync and alerts."""
+    if not path.exists():
+        return []
+    try:
+        cancels = json.loads(path.read_text(encoding="utf-8")).get("cancel", [])
+        for c in cancels:
+            dt.date.fromisoformat(c["date"])
+            if not c["course"].strip():
+                raise ValueError("empty course")
+    except (ValueError, KeyError, TypeError, AttributeError) as exc:
+        print(f"WARNING: ignoring {path.name}, it is invalid: {exc!r}", file=sys.stderr)
+        return []
+    return cancels
+
+
+def cancellation(rec: dict, cancels: list[dict]) -> dict | None:
+    if rec["kind"] != "class":
+        return None
+    for c in cancels:
+        if c["date"] == rec["start"][:10] and c["course"].strip().lower() == rec["course"].lower():
+            return c
+    return None
+
+
+def report_unmatched(records: dict[str, dict], cancels: list[dict]) -> None:
+    for c in cancels:
+        if not any(cancellation(r, [c]) for r in records.values()):
+            print(f"WARNING: override matches no session: {c['course']} on {c['date']}", file=sys.stderr)
+
+
 # --------------------------------------------------------------------------- ICS
 
 
@@ -385,18 +422,24 @@ def notes(rec: dict, slots: set[tuple]) -> str:
     return "\n".join(lines)
 
 
-def render_ics(records: dict[str, dict], slots: set[tuple]) -> str:
+def render_ics(records: dict[str, dict], slots: set[tuple], cancels: list[dict] | None = None) -> str:
     out = [
         "BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//upf-calendar//EN", "CALSCALE:GREGORIAN",
         "METHOD:PUBLISH", "X-WR-CALNAME:UPF Timetable", "X-WR-TIMEZONE:Europe/Madrid",
         "REFRESH-INTERVAL;VALUE=DURATION:PT1H", "X-PUBLISHED-TTL:PT1H",
     ]
     for rec in sorted(records.values(), key=lambda r: (r["start"], r["key"])):
+        cancel = cancellation(rec, cancels or [])
         title = rec["course"]
         if rec["kind"] == "class" and rec["type"] and rec["type"] != "Theory":
             title += f" [{rec['type']}]"
+        if cancel:
+            title = f"CANCELLED: {title}"
+        # bump SEQUENCE so calendar apps replace their cached copy of the event
         out += ["BEGIN:VEVENT", f"UID:{rec['key']}@upf-timetable", f"DTSTAMP:{_stamp_utc(rec['updated'])}",
-                f"LAST-MODIFIED:{_stamp_utc(rec['updated'])}", f"SEQUENCE:{rec['seq']}"]
+                f"LAST-MODIFIED:{_stamp_utc(rec['updated'])}", f"SEQUENCE:{rec['seq'] + bool(cancel)}"]
+        if cancel:
+            out += ["STATUS:CANCELLED", "TRANSP:TRANSPARENT"]
         if rec["kind"] == "holiday":
             day = dt.date.fromisoformat(rec["start"][:10])
             out += [f"DTSTART;VALUE=DATE:{day:%Y%m%d}", f"DTEND;VALUE=DATE:{day + dt.timedelta(days=1):%Y%m%d}",
@@ -407,6 +450,8 @@ def render_ics(records: dict[str, dict], slots: set[tuple]) -> str:
         if rec["room"]:
             out.append(f"LOCATION:{_esc(rec['room'])}")
         body = notes(rec, slots)
+        if cancel:
+            body = f"Cancelled (manual override): {cancel.get('note') or 'announced by the lecturer'}\n\n{body}".strip()
         if body:
             out.append(f"DESCRIPTION:{_esc(body)}")
         out.append("END:VEVENT")
@@ -483,7 +528,9 @@ def run(cfg: Config) -> int:
 
     heartbeat = "{}-W{:02d}".format(*now.isocalendar()[:2])
     new_state = {"version": 1, "heartbeat_week": heartbeat, "pending": pending, "events": records}
-    write_atomic(cfg.ics_path, render_ics(records, slots))
+    cancels = load_overrides(cfg.overrides_path)
+    report_unmatched(records, cancels)
+    write_atomic(cfg.ics_path, render_ics(records, slots, cancels))
     write_atomic(cfg.state_path, json.dumps(new_state, ensure_ascii=False, indent=1, sort_keys=True) + "\n")
     print(f"ok: {len(records)} events, {len(changes)} changes, {len(alerts)} alerts")
     return 0
