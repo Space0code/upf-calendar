@@ -5,7 +5,7 @@ Humans: see README.md.
 
 ## What this is
 `upf_calendar.py` mirrors the UPF public timetable into `docs/upf.ics` and sends ntfy push alerts on notable changes.
-GitHub Actions (`.github/workflows/update.yml`) runs it twice a day, commits `state.json` + `docs/upf.ics`,
+GitHub Actions (`.github/workflows/update.yml`) runs it about every 2 hours, commits `state.json` + `docs/upf.ics`,
 and publishes `docs/` with GitHub Pages. Everything lives in one stdlib-only file, top to bottom:
 config → fetching (`fetch_raw`, `normalize`, `fetch_with_retry`) → diff (`diff`) → baseline and alert rules
 (`baseline`, `classify`) → state records (`build_records`) → ICS output (`render_ics`) → alerts and IO (`send_push`, `run`).
@@ -16,7 +16,7 @@ python3 -m unittest discover -s tests -v                  # must pass; no networ
 UPF_URL='<timetable link>' FORCE=1 OUT_DIR=/tmp/upf python3 upf_calendar.py   # live run into a scratch dir
 ```
 - Always set `OUT_DIR` for local runs so the real `state.json` / `docs/upf.ics` are not touched.
-- Set `NOW_OVERRIDE=2026-09-21T20:07` to simulate the clock, `FORCE=1` to skip the 09:xx/20:xx run gate,
+- Set `NOW_OVERRIDE=2026-09-21T20:07` to simulate the clock, `GATE_HOURS=9,20` to only run in those Madrid hours (default: no gate; `FORCE=1` skips it),
   `MAX_ATTEMPTS=1` to avoid 15-minute retry sleeps.
 - On macOS the Python from PlatformIO or similar may lack CA certificates; use `/usr/bin/python3`.
 - Leave `NTFY_TOPIC` unset when testing: alerts are then printed instead of pushed. The main deployment's topic is public and shared with the whole class, so never publish test messages to it; use your own topic.
@@ -39,8 +39,8 @@ UPF_URL='<timetable link>' FORCE=1 OUT_DIR=/tmp/upf python3 upf_calendar.py   # 
 - Holidays / "No classes" entries have no `reseId`, so they are keyed by date, and are emitted as all-day events.
   Real sessions are keyed by `reseId`, which is unique per session.
 - Times are naive Europe/Madrid wall-clock times (floating in the `.ics`, no `TZID`). This is intentional.
-- The workflow's cron fires at two UTC hours per slot to cover summer/winter time, and the script gates on the Madrid hour.
-  Do not "simplify" this to one cron entry.
+- GitHub starts scheduled runs hours late (often 3-7 h) and drops some. An earlier 09:xx/20:xx Madrid gate therefore skipped
+  every scheduled run. Do not reintroduce a tight time-of-day gate; rely on frequent cron slots and the idempotent run.
 - "Last-minute" means the session is not over and starts today or within `LAST_MINUTE_DAYS` days. "Unusual" means a *newly appeared*
   session whose (course, type, weekday, start, end) is not in the baseline week; sessions already present when the feed was first seeded never alert.
 - `overrides.json` is hand-edited (unlike `state.json`). Cancellations in it are applied only in `render_ics`, so `state.json`

@@ -48,7 +48,8 @@ class Config:
         self.last_minute_days = int(_env("LAST_MINUTE_DAYS", "1"))  # 1 = today + tomorrow
         self.attempts = int(_env("MAX_ATTEMPTS", "5"))
         self.retry_minutes = float(_env("RETRY_MINUTES", "15"))
-        self.gate_hours = {int(h) for h in _env("GATE_HOURS", "9,20").split(",")}
+        # GitHub starts scheduled runs hours late, so by default there is no time-of-day gate (empty = always run)
+        self.gate_hours = {int(h) for h in _env("GATE_HOURS").split(",") if h.strip()}
         self.force = _env("FORCE") not in ("", "0")
         self.out_dir = Path(_env("OUT_DIR", str(ROOT)))
         self.overrides_path = Path(_env("OVERRIDES", str(ROOT / "overrides.json")))  # hand-edited, in the repo
@@ -490,7 +491,7 @@ def load_state(path: Path) -> dict | None:
 
 def run(cfg: Config) -> int:
     now = now_madrid()
-    if not cfg.force and now.hour not in cfg.gate_hours:
+    if not cfg.force and cfg.gate_hours and now.hour not in cfg.gate_hours:
         print(f"{now:%H:%M} Madrid is outside the run hours {sorted(cfg.gate_hours)}; skipping")
         return 0
     if not cfg.url:
