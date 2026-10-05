@@ -396,29 +396,6 @@
    "type": "Theory",
    "updated": "2026-09-21T16:57"
   },
-  "r-1953522211": {
-   "code": 32806,
-   "comment": "",
-   "course": "Autonomous systems",
-   "end": "2026-10-05T17:30",
-   "first_seen": "2026-10-01T17:26",
-   "group": "1",
-   "key": "r-1953522211",
-   "kind": "class",
-   "lecturers": [],
-   "log": [
-    {
-     "at": "2026-10-01T17:26",
-     "text": "Added — outside the regular weekly pattern"
-    }
-   ],
-   "obs": "",
-   "room": "54.006",
-   "seq": 0,
-   "start": "2026-10-05T15:00",
-   "type": "Theory",
-   "updated": "2026-10-01T17:26"
-  },
   "r-2069621520": {
    "code": 32810,
    "comment": "",
@@ -526,6 +503,29 @@
    "start": "2026-10-09T10:30",
    "type": "Theory",
    "updated": "2026-09-21T16:57"
+  },
+  "r-259321140": {
+   "code": 32806,
+   "comment": "",
+   "course": "Autonomous systems",
+   "end": "2026-10-06T14:00",
+   "first_seen": "2026-10-05T13:19",
+   "group": "1",
+   "key": "r-259321140",
+   "kind": "class",
+   "lecturers": [],
+   "log": [
+    {
+     "at": "2026-10-05T13:19",
+     "text": "Added — outside the regular weekly pattern"
+    }
+   ],
+   "obs": "",
+   "room": "52.221",
+   "seq": 0,
+   "start": "2026-10-06T11:30",
+   "type": "Theory",
+   "updated": "2026-10-05T13:19"
   },
   "r-294433145": {
    "code": 32807,
@@ -686,24 +686,6 @@
    "room": "52.119",
    "seq": 0,
    "start": "2026-11-20T10:30",
-   "type": "Theory",
-   "updated": "2026-09-21T16:57"
-  },
-  "r-852031435": {
-   "code": 32806,
-   "comment": "",
-   "course": "Autonomous systems",
-   "end": "2026-10-05T14:00",
-   "first_seen": "2026-09-21T16:57",
-   "group": "1",
-   "key": "r-852031435",
-   "kind": "class",
-   "lecturers": [],
-   "log": [],
-   "obs": "",
-   "room": "54.004",
-   "seq": 0,
-   "start": "2026-10-05T11:30",
    "type": "Theory",
    "updated": "2026-09-21T16:57"
   },
@@ -940,6 +922,29 @@
    "start": "2026-10-23T10:30",
    "type": "Theory",
    "updated": "2026-09-21T16:57"
+  },
+  "r1788395429": {
+   "code": 32806,
+   "comment": "",
+   "course": "Autonomous systems",
+   "end": "2026-10-06T17:30",
+   "first_seen": "2026-10-05T13:19",
+   "group": "1",
+   "key": "r1788395429",
+   "kind": "class",
+   "lecturers": [],
+   "log": [
+    {
+     "at": "2026-10-05T13:19",
+     "text": "Added — outside the regular weekly pattern"
+    }
+   ],
+   "obs": "",
+   "room": "54.003",
+   "seq": 0,
+   "start": "2026-10-06T15:00",
+   "type": "Theory",
+   "updated": "2026-10-05T13:19"
   },
   "r1868734865": {
    "code": 32807,
@@ -1356,7 +1361,7 @@
    "updated": "2026-09-21T16:57"
   }
  },
- "heartbeat_week": "2026-W40",
+ "heartbeat_week": "2026-W41",
  "pending": [],
  "version": 1
 }
