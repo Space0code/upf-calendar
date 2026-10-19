@@ -288,24 +288,6 @@
    "type": "Theory",
    "updated": "2026-09-21T16:57"
   },
-  "r-1518731364": {
-   "code": 32806,
-   "comment": "",
-   "course": "Autonomous systems",
-   "end": "2026-10-19T14:00",
-   "first_seen": "2026-09-21T16:57",
-   "group": "1",
-   "key": "r-1518731364",
-   "kind": "class",
-   "lecturers": [],
-   "log": [],
-   "obs": "",
-   "room": "52.019",
-   "seq": 0,
-   "start": "2026-10-19T11:30",
-   "type": "Theory",
-   "updated": "2026-09-21T16:57"
-  },
   "r-1664888853": {
    "code": 32810,
    "comment": "",
@@ -869,6 +851,29 @@
    "type": "Theory",
    "updated": "2026-09-21T16:57"
   },
+  "r1508478105": {
+   "code": 32806,
+   "comment": "",
+   "course": "Autonomous systems",
+   "end": "2026-10-23T17:00",
+   "first_seen": "2026-09-21T16:57",
+   "group": "1",
+   "key": "r1508478105",
+   "kind": "class",
+   "lecturers": [],
+   "log": [
+    {
+     "at": "2026-10-19T11:45",
+     "text": "moved Mon 19 Oct 11:30–14:00 → Fri 23 Oct 14:30–17:00; room 52.019 → 52.119"
+    }
+   ],
+   "obs": "",
+   "room": "52.119",
+   "seq": 1,
+   "start": "2026-10-23T14:30",
+   "type": "Theory",
+   "updated": "2026-10-19T11:45"
+  },
   "r1633800472": {
    "code": 32808,
    "comment": "",
@@ -1361,7 +1366,7 @@
    "updated": "2026-09-21T16:57"
   }
  },
- "heartbeat_week": "2026-W42",
+ "heartbeat_week": "2026-W43",
  "pending": [],
  "version": 1
 }
