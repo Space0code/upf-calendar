@@ -783,16 +783,30 @@ DESCRIPTION:Exam · group 1\nRoom: 52.219\nOutside the regular weekly patte
  rn.
 END:VEVENT
 BEGIN:VEVENT
-UID:r-711828749@upf-timetable
-DTSTAMP:20260921T145700Z
-LAST-MODIFIED:20260921T145700Z
+UID:r-1118536760@upf-timetable
+DTSTAMP:20261026T164000Z
+LAST-MODIFIED:20261026T164000Z
 SEQUENCE:0
 DTSTART:20261215T103000
-DTEND:20261215T130000
+DTEND:20261215T133000
 SUMMARY:Reinforcement learning [Exam]
-LOCATION:52.219
-DESCRIPTION:Exam · group 1\nRoom: 52.219\nOutside the regular weekly patte
- rn.
+LOCATION:54.084
+DESCRIPTION:Exam · group 1\nRoom: 54.084\nOutside the regular weekly patte
+ rn.\n\nChanges:\n• 26 Oct 17:40 — Added — outside the regular weekly
+  pattern
+END:VEVENT
+BEGIN:VEVENT
+UID:r818386288@upf-timetable
+DTSTAMP:20261026T164000Z
+LAST-MODIFIED:20261026T164000Z
+SEQUENCE:0
+DTSTART:20261215T143000
+DTEND:20261215T173000
+SUMMARY:Reinforcement learning [Exam]
+LOCATION:54.084
+DESCRIPTION:Exam · group 1\nRoom: 54.084\nOutside the regular weekly patte
+ rn.\n\nChanges:\n• 26 Oct 17:40 — Added — outside the regular weekly
+  pattern
 END:VEVENT
 BEGIN:VEVENT
 UID:r310250223@upf-timetable

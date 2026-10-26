@@ -144,6 +144,29 @@
    "type": "",
    "updated": "2026-09-21T16:57"
   },
+  "r-1118536760": {
+   "code": 32810,
+   "comment": "",
+   "course": "Reinforcement learning",
+   "end": "2026-12-15T13:30",
+   "first_seen": "2026-10-26T17:40",
+   "group": "1",
+   "key": "r-1118536760",
+   "kind": "class",
+   "lecturers": [],
+   "log": [
+    {
+     "at": "2026-10-26T17:40",
+     "text": "Added — outside the regular weekly pattern"
+    }
+   ],
+   "obs": "",
+   "room": "54.084",
+   "seq": 0,
+   "start": "2026-12-15T10:30",
+   "type": "Exam",
+   "updated": "2026-10-26T17:40"
+  },
   "r-1139600093": {
    "code": 32806,
    "comment": "",
@@ -633,24 +656,6 @@
    "seq": 0,
    "start": "2026-09-21T15:00",
    "type": "Theory",
-   "updated": "2026-09-21T16:57"
-  },
-  "r-711828749": {
-   "code": 32810,
-   "comment": "",
-   "course": "Reinforcement learning",
-   "end": "2026-12-15T13:00",
-   "first_seen": "2026-09-21T16:57",
-   "group": "1",
-   "key": "r-711828749",
-   "kind": "class",
-   "lecturers": [],
-   "log": [],
-   "obs": "",
-   "room": "52.219",
-   "seq": 0,
-   "start": "2026-12-15T10:30",
-   "type": "Exam",
    "updated": "2026-09-21T16:57"
   },
   "r-758567857": {
@@ -1256,6 +1261,29 @@
    "start": "2026-09-18T10:30",
    "type": "Theory",
    "updated": "2026-09-21T16:57"
+  },
+  "r818386288": {
+   "code": 32810,
+   "comment": "",
+   "course": "Reinforcement learning",
+   "end": "2026-12-15T17:30",
+   "first_seen": "2026-10-26T17:40",
+   "group": "1",
+   "key": "r818386288",
+   "kind": "class",
+   "lecturers": [],
+   "log": [
+    {
+     "at": "2026-10-26T17:40",
+     "text": "Added — outside the regular weekly pattern"
+    }
+   ],
+   "obs": "",
+   "room": "54.084",
+   "seq": 0,
+   "start": "2026-12-15T14:30",
+   "type": "Exam",
+   "updated": "2026-10-26T17:40"
   },
   "r855253280": {
    "code": 32808,
