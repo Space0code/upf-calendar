@@ -550,6 +550,29 @@
    "type": "Theory",
    "updated": "2026-09-21T16:57"
   },
+  "r-385857408": {
+   "code": 32807,
+   "comment": "",
+   "course": "Symbolic reasoning",
+   "end": "2026-11-12T17:00",
+   "first_seen": "2026-09-21T16:57",
+   "group": "1",
+   "key": "r-385857408",
+   "kind": "class",
+   "lecturers": [],
+   "log": [
+    {
+     "at": "2026-11-05T13:02",
+     "text": "moved Wed 11 Nov 14:30–17:00 → Thu 12 Nov 14:30–17:00; room 52.223 → 54.005"
+    }
+   ],
+   "obs": "",
+   "room": "54.005",
+   "seq": 1,
+   "start": "2026-11-12T14:30",
+   "type": "Theory",
+   "updated": "2026-11-05T13:02"
+  },
   "r-463460236": {
    "code": 32810,
    "comment": "",
@@ -955,24 +978,6 @@
    "start": "2026-10-06T15:00",
    "type": "Theory",
    "updated": "2026-10-05T13:19"
-  },
-  "r1868734865": {
-   "code": 32807,
-   "comment": "",
-   "course": "Symbolic reasoning",
-   "end": "2026-11-11T17:00",
-   "first_seen": "2026-09-21T16:57",
-   "group": "1",
-   "key": "r1868734865",
-   "kind": "class",
-   "lecturers": [],
-   "log": [],
-   "obs": "",
-   "room": "52.223",
-   "seq": 0,
-   "start": "2026-11-11T14:30",
-   "type": "Theory",
-   "updated": "2026-09-21T16:57"
   },
   "r1979445470": {
    "code": 32809,
