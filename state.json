@@ -293,6 +293,29 @@
    "type": "Theory",
    "updated": "2026-09-21T16:57"
   },
+  "r-1423993186": {
+   "code": 32810,
+   "comment": "",
+   "course": "Reinforcement learning",
+   "end": "2026-11-27T17:00",
+   "first_seen": "2026-11-25T01:30",
+   "group": "1",
+   "key": "r-1423993186",
+   "kind": "class",
+   "lecturers": [],
+   "log": [
+    {
+     "at": "2026-11-25T01:30",
+     "text": "Added — outside the regular weekly pattern"
+    }
+   ],
+   "obs": "",
+   "room": "52.121",
+   "seq": 0,
+   "start": "2026-11-27T14:30",
+   "type": "Theory",
+   "updated": "2026-11-25T01:30"
+  },
   "r-1444399163": {
    "code": 32809,
    "comment": "",
